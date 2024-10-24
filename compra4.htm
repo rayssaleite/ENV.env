@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+   
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4; /* Fundo claro */
+            color: #333; /* Texto padrão escuro */
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #fff; /* Fundo branco */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .logo img {
+            width: 80px;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #2e7d32; /* Verde escuro elegante */
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #2e7d32; /* Verde escuro no hover */
+        }
+
+        /* Menu Lateral */
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .bar {
+            height: 3px;
+            width: 100%;
+            background-color: #333; /* Cinza escuro */
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* Sidebar (menu lateral) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+            transition: 0.5s ease;
+            z-index: 1001;
+            padding-top: 60px;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 0;
+            border-bottom: 1px solid #e1e1e1;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: #2e7d32;
+        }
+
+        .sidebar ul li a.logout {
+            color: #ff0000;
+        }
+
+        /* Overlay (fundo escurecido) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Container do produto */
+        .product-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 150px; /* Ajustado para evitar o cabeçalho fixo */
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            gap: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        /* Imagem do produto */
+        .product-image {
+            width: 400px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        /* Detalhes do produto */
+        .product-details {
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .product-details h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .product-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            color: #555; /* Texto mais suave */
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        /* Botão "Comprar Agora" */
+        .buy-now-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #2e7d32;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-now-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        /* Botões extras */
+        .extra-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .extra-buttons a {
+            padding: 10px 20px;
+            background-color: #555;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .extra-buttons a:hover {
+            background-color: #333;
+        }
+
+        .extra-buttons a.back-btn {
+            background-color: #999; /* Cor diferente para o botão de voltar */
+        }
+
+        .extra-buttons a.back-btn:hover {
+            background-color: #777;
+        }
+
+        /* Ajustes para telas menores */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            .product-image {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">
+            <img src="../img/logo1.png" alt="Logo da Loja">
+        </div>
+        <h1>Frog Tech</h1>
+        <div class="menu-icon" id="menuIcon">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <!-- Menu Lateral -->
+    <div class="sidebar" id="sidebarMenu">
+        <ul>
+            <li><a href="paginahome.php">Home</a></li>
+            <li><a href="loja.htm">Loja</a></li>
+            <li><a href="perfil.php">Perfil de Usuário</a></li>
+            <li><a href="logout.php" class="logout">Sair</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Seção do Produto -->
+    <main>
+        <div class="product-container">
+            <img src="../img/cinco.png" alt="Imagem do Produto" class="product-image">
+            <div class="product-details">
+                <h1>Teclado Mecânico Corsair K70 RGB</h1>
+                <p class="product-description">Mecânico, iluminação RGB, switches rápidos, durável, antighosting.</p>
+                <p class="product-price">R$ 865,95</p>
+                <a href="Pagamento.html" class="buy-now-btn">Comprar Agora</a>
+
+                <!-- Botões extras (Buscar e Voltar) -->
+                <div class="extra-buttons">
+                    <a href="busca.php" class="search-btn">Buscar</a>
+                    <a href="loja.htm" class="back-btn">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const menuIcon = document.getElementById('menuIcon');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('overlay');
+
+        // Abrir menu lateral ao clicar no ícone
+        menuIcon.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('open');
+            overlay.classList.toggle('show');
+        });
+
+        // Fechar o menu lateral ao clicar no overlay
+        overlay.addEventListener('click', () => {
+            sidebarMenu.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+
+        // Fechar o menu lateral ao pressionar a tecla "Esc"
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                sidebarMenu.classList.remove('open');
+                overlay.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

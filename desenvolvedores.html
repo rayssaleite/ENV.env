@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="https://kit.fontawesome.com/dcf38f168a.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página-Desenvolvedores</title>
+   
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif; 
+        }
+
+        body {
+            background-image: url('../img/fundo.png'); /* Caminho para a imagem */
+            background-size: cover; /* Faz a imagem cobrir todo o fundo */
+            background-repeat: no-repeat; /* Não repetir a imagem */
+            background-position: center; /* Centraliza a imagem no fundo */
+            background-attachment: fixed; /* A imagem de fundo fica fixa enquanto rola a página */
+            font-family: Arial, Helvetica, sans-serif; 
+        }
+
+        #backgroundVideo {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            z-index: -1; 
+        }
+
+        header {
+            background-color: #ffffff;
+            width: 100%;
+            height: 100px;
+            padding: 15px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            position: relative;
+            left: 220px; /* Ajuste conforme necessário */
+        }
+
+        .logo img {
+            width: 400px;
+            cursor: pointer;
+            border-radius: 50px;
+            height: 70px;
+        }
+
+        .titulo {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: rgba(0, 71, 15, 0);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .card-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 50px auto;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            height: 400px;
+            text-align: center;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        .card img {
+            width: 50%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+        .carousel-control {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin: 0 20px;
+        }
+
+        /* Menu Ícone Hambúrguer */
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            position: relative;
+            right: 213px;
+        }
+
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: #333;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* Sidebar - Menu Lateral */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+            transition: 0.8s;
+            z-index: 999;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .sidebar ul li {
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .sidebar ul li a:hover {
+            color: #28C76F;
+        }
+
+        /* Overlay (fundo transparente para fechar a sidebar) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 998;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="backgroundVideo">
+        <source src="" type="video/mp4"> 
+    </video>
+    
+    <header>
+        <div class="logo"> 
+            <img src="../img/logo2.png" alt="Frog Tech Logo">
+        </div>
+        <div class="menu">
+            <div class="menu-icon" id="menuIcon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="sidebar" id="sidebarMenu">
+        <ul>
+            <li><a href="loja.html">Loja</a></li>
+            <li><a href="paginahome.php">Home</a></li>
+            <li><a href="perfil.php">Perfil de Usuário</a></li>
+            <li><a href="logout.php">Sair</a></li>
+        </ul>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="titulo">
+        <h1>Desenvolvedores Frog Tech</h1>
+        <br>
+        <h3>Equipe de programadores</h3>
+    </div>
+
+    <div class="card-container">
+        <button class="carousel-control" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <div class="card" id="cardDisplay">
+            <img src="../img/semideus.png" alt="Imagem do desenvolvedor">
+            <h3>Felipe Amaro Souza de Jesus</h3>
+            <p>Lider da equipe de programadores e programador Full-Stack.</p>
+        </div>
+        <button class="carousel-control" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Frog Tech. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const developers = [
+            {
+                img: '../img/semideus.png',
+                name: 'Felipe Amaro Souza de Jesus',
+                description: 'Lider da equipe de programadores e programador Full-Stack.',
+            },
+            {
+                img: '../img/Rayssa.png',
+                name: 'Rayssa Pires',
+                description: 'Vice-Lider da equipe de programadores e programadora Full-Stack.',
+            },
+            {
+                img: '../img/patricia.png',
+                name: 'Patricia Kaiane Fernandes Farias',
+                description: 'Progamadora Front-End.',
+            },
+            {
+                img: '../img/taina.png',
+                name: 'Tainá Sousa da Silva',
+                description: 'Programadora Front-end.',
+            },
+            {
+                img: '../img/Guilerme.png',
+                name: 'Guilherme Cosme Da Silva',
+                description: 'Programador front-end.',
+            },
+            {
+                img: '../img/thurzada.png',
+                name: 'Arthur Godwin Maia',
+                description: 'Programador front-end.',
+                description: 'Programador front-end.'
+            },
+            {
+                img: '../img/Ganz.png',
+                name: 'Lucas Matheus Machado Ganz',
+                description: 'Desenvolvedor Banco de Dados.'
+            },
+            {
+                img: '../img/Criarj.png',
+                name: 'Gabriel David',
+                description: 'Engenheiro DevOps.'
+            },
+            {
+                img: 'caminho/da/imagem9.jpg',
+                name: 'Italo Santos',
+                description: 'Engenheiro DevOps.'
+            }
+        ];
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const cardDisplay = document.getElementById('cardDisplay');
+        let currentCard = 0;
+
+        function showCard(index) {
+            const developer = developers[index];
+            cardDisplay.innerHTML = `
+                <img src="${developer.img}" alt="${developer.name}">
+                <h3>${developer.name}</h3>
+                <p>${developer.description}</p>
+            `;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentCard = (currentCard - 1 + developers.length) % developers.length;
+            showCard(currentCard);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentCard = (currentCard + 1) % developers.length;
+            showCard(currentCard);
+        });
+
+        const menuIcon = document.getElementById('menuIcon');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('overlay');
+
+        menuIcon.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('open');
+            overlay.classList.toggle('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebarMenu.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+    </script>
+</body>
+</html>
